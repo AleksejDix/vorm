@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     create() {
+      if (!this.query) return
       if (this.model.includes(this.query)) return
       this.model.push(this.query)
       this.query = ''

@@ -3,16 +3,17 @@
     :is="tag"
   >
     <template
-      v-for="(v, k) in schema"
+      v-for="field in schema"
     >
       <component
-        :key="k"
-        :is="schema[k].component"
-        :model-value="getValue(schema[k])"
-        @update:modelValue="update(k, $event)"
-        v-bind="getAttributes(schema[k])"
+        :key="field.model"
+        :is="field.component"
+        :model-value="getValue(field)"
+        @update:modelValue="update(field.model, $event)"
+        v-bind="getAttributes(field)"
       />
     </template>
+
     <slot
       name="actions"
       :fields="modelValue"
@@ -33,7 +34,7 @@ export default {
       default: () => ({})
     },
     schema: {
-      type: Object,
+      type: Array,
       default: () => ({})
     },
     tag: {
@@ -63,7 +64,6 @@ export default {
       return this.modelValue[field.model]
     },
     getAttributes (field) {
-      console.log(field)
       // eslint-disable-next-line no-unused-vars
       const {component, attrs} = field
       return attrs

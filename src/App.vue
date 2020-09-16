@@ -7,12 +7,14 @@
       :schema="schema"
     >
       <template #actions="{fields}">
-        <button
-          type="button"
-          @click="handleSubmit(fields)"
-        >
-          submit
-        </button>
+        <div>
+          <button
+            type="submit"
+            @click.prevent="handleSubmit(fields)"
+          >
+            submit
+          </button>
+        </div>
       </template>
     </VormFields>
   </div>
@@ -27,6 +29,8 @@ Vue.component('VormString', () => import('@/components/fields/VormString'))
 Vue.component('VormBoolean', () => import('@/components/fields/VormBoolean'))
 Vue.component('VormText', () => import('@/components/fields/VormText'))
 Vue.component('VormRepeater', () => import('@/components/fields/VormRepeater'))
+Vue.component('VormSelect', () => import('@/components/fields/VormSelect'))
+Vue.component('VormChoise', () => import('@/components/fields/VormChoise'))
 
 
 export default {
@@ -36,42 +40,96 @@ export default {
   data() {
     return {
       model: {
-        fruits: ['apple', 'peach']
+        car: 'Audi',
+        fruits: ['apple', 'peach'],
+        person: 'Aleksej',
+        people: ['Aleksej'],
       }
     }
   },
   computed: {
     schema() {
-      return {
-        name: {
+      return [
+        {
+          component: 'VormSelect',
+          model: 'car',
+          attrs: {
+            label: 'car',
+            options: [
+              'Audi',
+              'Saab',
+              'Volvo',
+            ]
+          }
+        },
+        {
+          component: 'VormSelect',
+          model: 'cars',
+          attrs: {
+            label: 'car',
+            multiple: true,
+            options: [
+              'Audi',
+              'Saab',
+              'Volvo',
+            ]
+          }
+        },
+        {
+          component: 'VormChoise',
+          model: 'people',
+          attrs: {
+            label: 'people',
+            multiple: true,
+            options: [
+              'Aleksej',
+              'Lidia',
+            ]
+          }
+        },
+        {
+          component: 'VormChoise',
+          model: 'person',
+          attrs: {
+            label: 'person',
+            options: [
+              'Aleksej',
+              'Lidia',
+            ]
+          }
+        },
+        {
           component: 'VormString',
           model: 'name',
           attrs: {
             label: 'name',
+            required: true,
+            pattern: '[a-zA-Z0-9]+',
+            placeholder: 'try it out'
           }
         },
-        fruits: {
+        {
           component: 'VormRepeater',
           model: 'fruits',
           attrs: {
             label: 'fruits'
           }
         },
-        accept: {
+        {
           component: 'VormBoolean',
           model: 'accept',
           attrs: {
             label: 'accept'
           }
         },
-        comment: {
+        {
           component: 'VormText',
           model: 'comment',
           attrs: {
             label: 'comment'
           }
         }
-      }
+      ]
     }
   },
   methods: {
@@ -101,5 +159,11 @@ input,
 textArea {
   border: 1px solid #ccc;
   border-radius: 0.25rem
+}
+
+input[type="text"],
+textArea,
+select {
+  width: 100%
 }
 </style>

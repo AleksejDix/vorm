@@ -3,6 +3,7 @@
     <div>{{ $attrs.label }}</div>
     <input
       type="text"
+      :name="$attrs.label"
       v-model="model"
       v-bind="$attrs"
     >

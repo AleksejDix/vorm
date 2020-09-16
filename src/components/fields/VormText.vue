@@ -2,6 +2,7 @@
   <label>
     <div>{{ $attrs.label }}</div>
     <textarea
+      :name="$attrs.label"
       v-model="model"
       v-bind="$attrs"
     />
